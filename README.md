@@ -9,6 +9,7 @@ Teleport组件存在严重的内存泄露问题，[使用 Teleport 时不会触�
 
 **旧的代码：**
 ```js
+// 路径：src/components/Teleport.ts
 const isTeleportDisabled = (props) => props && (props.disabled || props.disabled === "");
 
 if (doRemove || !isTeleportDisabled(props)) {
@@ -53,4 +54,19 @@ if (shapeFlag & 16 /* ShapeFlags.ARRAY_CHILDREN */) {
 从上面代码可以知道：
 ```js
 const isTeleportDisabled = (props) => props && (props.disabled || props.disabled === "");
+```
+
+## 注意事项
+这个runtime-core是修改的时候，注意版本号，如果在官方还没有修复前，如果vue的版本升级到新版的后，要对应修改这个文件`src/components/Teleport.ts`，然后进行发布。
+
+具体步骤是：
+1. 先到vue的github源码[地址](https://github.com/vuejs/core)
+2. 下拉分支，找到对应版本的分支源码进行下载。例如：`v3.2.47`
+3. 源码下载后，解压出来，就可以执行命令：
+
+```shell
+npm i pnpm
+pnpm i
+pnpm run release
+# 如果执行上一个页面报错，记得要要执行git init然后全部提交到本地仓库，才可以执行上面的命令
 ```
